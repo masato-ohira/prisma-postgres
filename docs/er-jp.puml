@@ -1,0 +1,41 @@
+@startuml
+entity Products {
+  +product_id: integer [PK]
+  name: string
+  price: decimal
+  production_cost: decimal
+}
+
+entity Orders {
+  +order_id: integer [PK]
+  order_date: datetime
+  total_amount: decimal
+  status_id: integer [FK]
+}
+
+entity OrderDetails {
+  +order_detail_id: integer [PK]
+  order_id: integer [FK]
+  product_id: integer [FK]
+  quantity: integer
+  price: decimal
+}
+
+entity OrderStatus {
+  +status_id: integer [PK]
+  status_name: string
+}
+
+entity Sales {
+  +sale_id: integer [PK]
+  order_id: integer [FK]
+  sale_date: datetime
+  total_amount: decimal
+  profit: decimal
+}
+
+Products ||--o{ OrderDetails : includes
+Orders ||--o{ OrderDetails : contains
+Orders }|--|| OrderStatus : has
+Orders ||--o| Sales : moves to
+@enduml
