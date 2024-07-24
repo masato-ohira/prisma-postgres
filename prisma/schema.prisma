@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./generated/zod"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Posts {
+  id Int @default(autoincrement()) @id
+  title String
+  body String
+}
+
+model Products {
+  product_id      Int      @id @default(autoincrement())
+  name            String
+  slug            String
+  price           Decimal
+  material_cost   Decimal
+  OrderDetails    OrderDetails[]
+
+  @@map("products")
+}
+
+model Orders {
+  order_id     Int           @id @default(autoincrement())
+  order_date   DateTime
+  total_amount Decimal
+  status_id    Int
+  OrderStatus  OrderStatus   @relation(fields: [status_id], references: [status_id])
+  OrderDetails OrderDetails[]
+  Sales        Sales[]
+
+  @@map("orders")
+}
+
+model OrderDetails {
+  order_detail_id Int      @id @default(autoincrement())
+  order_id        Int
+  product_id      Int
+  quantity        Int
+  price           Decimal
+  Orders          Orders   @relation(fields: [order_id], references: [order_id])
+  Products        Products @relation(fields: [product_id], references: [product_id])
+
+  @@map("order_details")
+}
+
+model OrderStatus {
+  status_id   Int     @id @default(autoincrement())
+  status_name String
+  Orders      Orders[]
+
+  @@map("order_status")
+}
+
+model Sales {
+  sale_id     Int     @id @default(autoincrement())
+  order_id    Int
+  sale_date   DateTime
+  total_amount Decimal
+  profit      Decimal
+  Orders      Orders   @relation(fields: [order_id], references: [order_id])
+
+  @@map("sales")
+}

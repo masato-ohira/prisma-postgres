@@ -1,0 +1,41 @@
+@startuml
+entity 商品 {
+  +商品ID: integer [PK]
+  商品名: string
+  価格: decimal
+  生産コスト: decimal
+}
+
+entity 注文 {
+  +注文ID: integer [PK]
+  注文日時: datetime
+  合計金額: decimal
+  提供状態ID: integer [FK]
+}
+
+entity 注文明細 {
+  +注文詳細ID: integer [PK]
+  注文ID: integer [FK]
+  商品ID: integer [FK]
+  数量: integer
+  価格: decimal
+}
+
+entity 提供状態 {
+  +提供状態ID: integer [PK]
+  提供状態名: string
+}
+
+entity 売上 {
+  +売上ID: integer [PK]
+  注文ID: integer [FK]
+  売上日時: datetime
+  合計金額: decimal
+  利益: decimal
+}
+
+商品 ||--o{ 注文明細 : 含む
+注文 ||--o{ 注文明細 : 含む
+注文 }|--|| 提供状態 : 状態を持つ
+注文 ||--o| 売上 : 移動する
+@enduml
