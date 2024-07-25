@@ -10,6 +10,7 @@ styled-system
 
 # prisma
 generated
+postgres_data
 
 # playwright
 /test-results/
