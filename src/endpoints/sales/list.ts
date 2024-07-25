@@ -1,16 +1,19 @@
 import { z } from '@hono/zod-openapi'
-import { Bool, OpenAPIRoute } from 'chanfana'
+import { Arr, Bool, OpenAPIRoute } from 'chanfana'
 
-import { OrdersFindManySchema } from '@p/generated/zod/schemas'
+import {
+  SalesCreateWithoutOrdersInputObjectSchema,
+  SalesFindManySchema,
+} from '@p/generated/zod/schemas'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export class OrderList extends OpenAPIRoute {
+export class SaleList extends OpenAPIRoute {
   schema = {
-    tags: ['Orders'],
-    summary: '注文一覧',
+    tags: ['Sales'],
+    summary: '売上一覧',
     request: {
-      query: OrdersFindManySchema.pick({
+      query: SalesFindManySchema.pick({
         cursor: true,
         take: true,
         skip: true,
@@ -19,19 +22,13 @@ export class OrderList extends OpenAPIRoute {
     },
     responses: {
       '200': {
-        description: '注文一覧を取得します',
+        description: '売上一覧を取得します',
         content: {
           'application/json': {
             schema: z.object({
               series: z.object({
                 success: Bool(),
-                result: z.object({
-                  data: z
-                    .object({
-                      order_id: z.number(),
-                    })
-                    .array(),
-                }),
+                sales: Arr(SalesCreateWithoutOrdersInputObjectSchema),
               }),
             }),
           },
@@ -43,11 +40,10 @@ export class OrderList extends OpenAPIRoute {
   async handle() {
     const data = await this.getValidatedData<typeof this.schema>()
     const query = data.query
-    const orders = await prisma.orders.findMany({
+    const orders = await prisma.sales.findMany({
       ...query,
       include: {
-        OrderDetails: true,
-        OrderStatus: true,
+        Orders: true,
       },
     })
 

@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi'
-import { Bool, OpenAPIRoute } from 'chanfana'
+import { Arr, Bool, OpenAPIRoute } from 'chanfana'
 
 import {
   ProductsCreateWithoutOrderDetailsInputObjectSchema,
@@ -28,9 +28,9 @@ export class ProductList extends OpenAPIRoute {
             schema: z.object({
               series: z.object({
                 success: Bool(),
-                result: z.object({
-                  data: ProductsCreateWithoutOrderDetailsInputObjectSchema.array(),
-                }),
+                products: Arr(
+                  ProductsCreateWithoutOrderDetailsInputObjectSchema,
+                ),
               }),
             }),
           },

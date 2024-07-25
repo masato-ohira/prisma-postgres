@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi'
-import { Bool, OpenAPIRoute } from 'chanfana'
+import { Arr, Bool, OpenAPIRoute } from 'chanfana'
 
 import { OrderStatusCreateWithoutOrdersInputObjectSchema } from '@p/generated/zod/schemas'
 import { PrismaClient } from '@prisma/client'
@@ -17,9 +17,7 @@ export class OrderStatus extends OpenAPIRoute {
             schema: z.object({
               series: z.object({
                 success: Bool(),
-                result: z.object({
-                  data: OrderStatusCreateWithoutOrdersInputObjectSchema.array(),
-                }),
+                status: Arr(OrderStatusCreateWithoutOrdersInputObjectSchema),
               }),
             }),
           },

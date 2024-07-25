@@ -2,6 +2,7 @@ import { Bool, OpenAPIRoute } from 'chanfana'
 import dayjs from 'dayjs'
 import { z } from 'zod'
 
+import { OrdersCreateWithoutSalesInputObjectSchema } from '@p/generated/zod/schemas'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -50,7 +51,6 @@ export class OrderAdd extends OpenAPIRoute {
       const status = await prisma.orderStatus.findMany()
 
       const price = product?.price
-      console.log({ price })
 
       const order = await prisma.orders.create({
         data: {

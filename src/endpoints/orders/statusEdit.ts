@@ -34,9 +34,7 @@ export class OrderStatusEdit extends OpenAPIRoute {
             schema: z.object({
               series: z.object({
                 success: Bool(),
-                result: z.object({
-                  data: StatusSchema,
-                }),
+                status: StatusSchema,
               }),
             }),
           },
