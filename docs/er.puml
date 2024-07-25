@@ -2,8 +2,9 @@
 entity Products {
   +product_id: integer [PK]
   name: string
+  slug: string
   price: decimal
-  production_cost: decimal
+  material_cost: decimal
 }
 
 entity Orders {
