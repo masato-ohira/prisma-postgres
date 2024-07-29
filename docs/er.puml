@@ -1,5 +1,5 @@
 @startuml
-entity Products {
+entity "製品(Products)" as Products {
   +product_id: integer [PK]
   name: string
   slug: string
@@ -7,14 +7,14 @@ entity Products {
   material_cost: decimal
 }
 
-entity Orders {
+entity "注文(Orders)" as Orders {
   +order_id: integer [PK]
   order_date: datetime
   total_amount: decimal
   status_id: integer [FK]
 }
 
-entity OrderDetails {
+entity "注文詳細(OrderDetails)" as OrderDetails {
   +order_detail_id: integer [PK]
   order_id: integer [FK]
   product_id: integer [FK]
@@ -22,12 +22,12 @@ entity OrderDetails {
   price: decimal
 }
 
-entity OrderStatus {
+entity "注文の状態(OrderStatus)" as OrderStatus {
   +status_id: integer [PK]
   status_name: string
 }
 
-entity Sales {
+entity "売上(Sales)" as Sales {
   +sale_id: integer [PK]
   order_id: integer [FK]
   sale_date: datetime
