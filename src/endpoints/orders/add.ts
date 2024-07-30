@@ -1,14 +1,13 @@
-import { Bool, OpenAPIRoute } from 'chanfana'
+import { Bool, Num, OpenAPIRoute } from 'chanfana'
 import dayjs from 'dayjs'
 import { z } from 'zod'
 
-import { OrdersCreateWithoutSalesInputObjectSchema } from '@p/generated/zod/schemas'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const OrderSchema = z.object({
-  product_id: z.number().min(1),
-  quantity: z.number().min(1),
+  product_id: Num().min(1),
+  quantity: Num().min(1),
 })
 
 export class OrderAdd extends OpenAPIRoute {
