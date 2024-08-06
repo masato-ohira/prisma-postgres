@@ -18,12 +18,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Posts {
-  id Int @default(autoincrement()) @id
-  title String
-  body String
-}
-
 model Products {
   product_id      Int      @id @default(autoincrement())
   name            String
