@@ -1,6 +1,4 @@
-import translation from 'zod-i18n-map/locales/ja/zod.json' assert {
-  type: 'json',
-}
+import translation from 'zod-i18n-map/locales/ja/zod.json'
 
 // エラー文を独自にカスタム
 // ------------------------------
