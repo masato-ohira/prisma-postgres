@@ -4,6 +4,7 @@
 bun i -y
 ```
 
+
 # DB
 
 ```zsh
@@ -32,6 +33,11 @@ psql -U postgres -d postgres_demo
 # ログアウト
 exit
 ```
+
+# env設定
+
+.env.exampleを元に `.env` を作成する
+
 
 # Prisma
 
